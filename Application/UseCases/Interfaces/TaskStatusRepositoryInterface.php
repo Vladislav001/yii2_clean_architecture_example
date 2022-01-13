@@ -1,0 +1,16 @@
+<?php
+
+namespace UseCases\Interfaces;
+
+use Entities\TaskStatus;
+
+interface TaskStatusRepositoryInterface
+{
+	public function create(TaskStatus $data) : array;
+
+	public function update(TaskStatus $data) : bool;
+
+	public function delete(int $id) : bool;
+
+	public function getList(int $projectId) : array;
+}
