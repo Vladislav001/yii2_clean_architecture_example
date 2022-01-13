@@ -13,5 +13,5 @@ define('DICTIONARY', array(
 ));
 
 // МБ ИЗМЕНЯЕМЫЕ ПАРАМЕТРЫ ПОСЛЕ ПЕРЕНОСА НА PROD //
-define("FRONTEND_URL", 'https://ren-dashboard.ru/');
-define("DOMAIN_EMAIL", 'v.guriev@lince.studio');
+define("FRONTEND_URL", '');
+define("DOMAIN_EMAIL", '');
