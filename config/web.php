@@ -94,7 +94,7 @@ $config = [
 									"title" => $data['message']
 								);
 							}
-						} elseif (isset(current($data)['message']))
+						} elseif ($data[0]['message'])
 						{
 							$errors[] = array("id" => "some_error", "title" => current($data)['message']);
 						}
