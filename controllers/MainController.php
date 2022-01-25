@@ -33,6 +33,8 @@ class MainController extends Controller
 
 	public function beforeAction($action)
 	{
+		parent::beforeAction($action);
+
 		$containerBuilder = new ContainerBuilder;
 		$containerBuilder->addDefinitions(PATH_APPLICATION_DEPENDENCIES);
 		$this->container = $containerBuilder->build();
@@ -50,7 +52,7 @@ class MainController extends Controller
 		$this->refreshToken = $headers->get('refresh-token');
 
 		header("Access-Control-Allow-Origin: *");
-		header("Access-Control-Allow-Methods: POST,GET");
+		header("Access-Control-Allow-Methods: POST,GET,PUT,PATCH,DELETE,HEAD,OPTIONS");
 		header("Access-Control-Allow-Headers: *");
 
 		return true;

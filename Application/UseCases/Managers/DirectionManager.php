@@ -24,19 +24,7 @@ class DirectionManager
 	public function create(string $accessToken, array $data) : array
 	{
 		$data = new Direction(null, $data['project_id'], $data['name']);
-		$userPermissions = $this->userRepository->getPermissionsInfo();
-		$currentUserId = $this->userRepository->findUserIdByAccessToken($accessToken);
-
-		if(Yii::$app->authManager->checkAccess(
-			$currentUserId,
-			$userPermissions['get_project']['key'],
-			['project_id' => $data->getProjectId()])
-		)
-		{
-			return $this->directionRepository->create($data);
-		}
-
-		return [];
+		return $this->directionRepository->create($data);
 	}
 
 	public function update(string $accessToken, array $data) : bool
@@ -51,6 +39,7 @@ class DirectionManager
 			throw new \Exception('direction_not_found');
 		}
 
+		// todo потом вынести
 		if(Yii::$app->authManager->checkAccess(
 			$currentUserId,
 			$userPermissions['get_project']['key'],
@@ -74,6 +63,7 @@ class DirectionManager
 			throw new \Exception('direction_not_found');
 		}
 
+		// todo потом вынести
 		if(Yii::$app->authManager->checkAccess(
 			$currentUserId,
 			$userPermissions['get_project']['key'],
@@ -131,18 +121,6 @@ class DirectionManager
 
 	public function getList(string $accessToken, int $projectId) : array
 	{
-		$userPermissions = $this->userRepository->getPermissionsInfo();
-		$currentUserId = $this->userRepository->findUserIdByAccessToken($accessToken);
-
-		if(Yii::$app->authManager->checkAccess(
-			$currentUserId,
-			$userPermissions['get_project']['key'],
-			['project_id' => $projectId])
-		)
-		{
-			return $this->directionRepository->getList($projectId);
-		}
-
-		return [];
+		return $this->directionRepository->getList($projectId);
 	}
 }

@@ -124,4 +124,9 @@ class UserController
 	{
 		return $this->userManager->changePasswordByToken($newPassword, $token);
 	}
+
+	public function getPermissionsInfo() : array
+	{
+		return $this->userManager->getPermissionsInfo();
+	}
 }

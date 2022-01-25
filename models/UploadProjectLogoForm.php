@@ -16,7 +16,14 @@ class UploadProjectLogoForm extends Model
 	public function rules()
 	{
 		return [
-			[['file'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'maxFiles' => 1],
+			[
+				['file'],
+				'file',
+				'skipOnEmpty' => true,
+				'extensions' => 'png, jpg, jpeg',
+				'maxSize' => 5 * (1024 * 1024), //5MB
+				'maxFiles' => 1
+			]
 		];
 	}
 
@@ -24,14 +31,17 @@ class UploadProjectLogoForm extends Model
 	{
 		if ($this->validate())
 		{
+			$filePath = null;
 			$dirPath = PATH_UPLOADS . $this->projectId . '/logo/';
 
 			FileHelper::createDirectory($dirPath);
 
-			$fileName = $this->file->baseName;
-			$fileName = createTransliteration($fileName);
-			$filePath = $dirPath . $fileName . '.' . $this->file->extension;
-			$this->file->saveAs($filePath);
+			if ($this->file)
+			{
+				$fileName = '1';
+				$filePath = $dirPath . $fileName . '.' . $this->file->extension;
+				$this->file->saveAs($filePath);
+			}
 
 			return $filePath;
 		} else

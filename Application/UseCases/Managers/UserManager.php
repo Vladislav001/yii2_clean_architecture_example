@@ -103,4 +103,9 @@ class UserManager
 	{
 		return $this->userRepository->changePasswordByToken($newPassword, $token);
 	}
+
+	public function getPermissionsInfo() : array
+	{
+		return $this->userRepository->getPermissionsInfo();
+	}
 }

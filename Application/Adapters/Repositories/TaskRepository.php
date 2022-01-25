@@ -33,6 +33,7 @@ class TaskRepository extends MainRepository implements TaskRepositoryInterface
 			->innerJoin("$projectTableName", "$projectTableName.id = $directionTableName.project_id")
 			->where(["$projectTableName.id" => $projectID])
 			->groupBy('direction_name, task_status')
+			->orderBy(["$directionTableName.number" => SORT_ASC])
 			->all();
 
 		$result = $query->asArray()->all();

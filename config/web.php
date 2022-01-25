@@ -16,6 +16,7 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'TVX3ZKGZ9rkeAIzhSLDhaZTRb1LAylsA',
+			'enableCsrfValidation' => false,
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -76,12 +77,25 @@ $config = [
 						{
 							$errorService = new ErrorService();
 
+							// todo switch case
 							if ($data['type'] === 'yii\db\Exception')
 							{
 								// проверка БД исключений
 								$errorService->addError('database_error');
 								$errors = $errorService->getErrors();
-							} else if ($data['type'] == 'Exception' && $errorService->ERROR_DICTIONARY[$data['message']])
+							} elseif ($data['type'] === 'DI\Definition\Exception\InvalidDefinition')
+							{
+								// проверка DI зависимостей
+								$errorService->addError('di_error');
+								$errors = $errorService->getErrors();
+							}
+							elseif ($data['type'] === 'TypeError')
+							{
+								// проверка ошибок на типы/достаточное кол-во данных
+								$errorService->addError('type_error');
+								$errors = $errorService->getErrors();
+							}
+							else if ($data['type'] == 'Exception' && $errorService->ERROR_DICTIONARY[$data['message']])
 							{
 								// проверка исключений, попадающих под свои правила
 								$errorService->addError($data['message']);
@@ -94,7 +108,7 @@ $config = [
 									"title" => $data['message']
 								);
 							}
-						} elseif ($data[0]['message'])
+						} elseif (isset($data[0]['message']))
 						{
 							$errors[] = array("id" => "some_error", "title" => current($data)['message']);
 						}
@@ -146,7 +160,7 @@ if (YII_ENV_DEV) {
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-		//'allowedIPs' => [''],
+        //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 }
 

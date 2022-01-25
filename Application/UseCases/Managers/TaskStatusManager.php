@@ -22,19 +22,7 @@ class TaskStatusManager
 	public function create(string $accessToken, array $data) : array
 	{
 		$data = new TaskStatus(null, $data['name'], $data['project_id']);
-		$userPermissions = $this->userRepository->getPermissionsInfo();
-		$currentUserId = $this->userRepository->findUserIdByAccessToken($accessToken);
-
-		if(Yii::$app->authManager->checkAccess(
-			$currentUserId,
-			$userPermissions['get_project']['key'],
-			['project_id' => $data->getProjectId()])
-		)
-		{
-			return $this->taskStatusRepository->create($data);
-		}
-
-		return [];
+		return $this->taskStatusRepository->create($data);
 	}
 
 	public function update(string $accessToken, array $data) : bool
@@ -86,18 +74,6 @@ class TaskStatusManager
 
 	public function getList(string $accessToken, int $projectId) : array
 	{
-		$userPermissions = $this->userRepository->getPermissionsInfo();
-		$currentUserId = $this->userRepository->findUserIdByAccessToken($accessToken);
-
-		if(Yii::$app->authManager->checkAccess(
-			$currentUserId,
-			$userPermissions['get_project']['key'],
-			['project_id' => $projectId])
-		)
-		{
-			return $this->taskStatusRepository->getList($projectId);
-		}
-
-		return [];
+		return $this->taskStatusRepository->getList($projectId);
 	}
 }

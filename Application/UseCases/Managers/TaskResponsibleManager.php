@@ -21,19 +21,7 @@ class TaskResponsibleManager
 	public function create(string $accessToken, array $data) : array
 	{
 		$data = new TaskResponsible(null, $data['name'], $data['project_id']);
-		$userPermissions = $this->userRepository->getPermissionsInfo();
-		$currentUserId = $this->userRepository->findUserIdByAccessToken($accessToken);
-
-		if(Yii::$app->authManager->checkAccess(
-			$currentUserId,
-			$userPermissions['get_project']['key'],
-			['project_id' => $data->getProjectId()])
-		)
-		{
-			return $this->taskResponsibleRepository->create($data);
-		}
-
-		return [];
+		return $this->taskResponsibleRepository->create($data);
 	}
 
 	public function update(string $accessToken, array $data) : bool
@@ -85,18 +73,6 @@ class TaskResponsibleManager
 
 	public function getList(string $accessToken, int $projectId) : array
 	{
-		$userPermissions = $this->userRepository->getPermissionsInfo();
-		$currentUserId = $this->userRepository->findUserIdByAccessToken($accessToken);
-
-		if(Yii::$app->authManager->checkAccess(
-			$currentUserId,
-			$userPermissions['get_project']['key'],
-			['project_id' => $projectId])
-		)
-		{
-			return $this->taskResponsibleRepository->getList($projectId);
-		}
-
-		return [];
+		return $this->taskResponsibleRepository->getList($projectId);
 	}
 }

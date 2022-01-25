@@ -51,20 +51,8 @@ class ProjectManager
 	public function update($accessToken, array $data) : bool
 	{
 		$currentUserId = $this->userRepository->findUserIdByAccessToken($accessToken);
-		$project = new Project($data['id'], $currentUserId, $data['name']);
-		$userPermissions = $this->userRepository->getPermissionsInfo();
-
-		// todo на update проекта мб отдельно правило
-		if(Yii::$app->authManager->checkAccess(
-			$currentUserId,
-			$userPermissions['get_project']['key'],
-			['project_id' =>$data['id']])
-		)
-		{
-			return $this->projectRepository->update($project);
-		}
-
-		return false;
+		$project = new Project($data['id'], $currentUserId, $data['name'], $data['logo']);
+		return $this->projectRepository->update($project);
 	}
 
 	// todo проверить используется ли где то, если нет - вычистить
@@ -98,49 +86,25 @@ class ProjectManager
 
 	public function createPermission(string $accessToken, int $projectId, int $userId, string $permission) : bool
 	{
-		$userPermissions = $this->userRepository->getPermissionsInfo();
-		$currentUserId = $this->userRepository->findUserIdByAccessToken($accessToken);
+		$user = $this->userRepository->find(array('where' => array('id' => $userId)))[0];
 
-		if(Yii::$app->authManager->checkAccess(
-			$currentUserId,
-			$userPermissions['change_rules_project']['key'],
-			['project_id' => $projectId])
-		)
+		if (!$user)
 		{
-			$user = $this->userRepository->find(array('where' => array('id' => $userId)))[0];
-
-			if (!$user)
-			{
-				throw new \Exception('user_not_found');
-			}
-
-			return $this->projectRepository->createPermission($userId, $permission, $projectId);
+			throw new \Exception('user_not_found');
 		}
 
-		return false;
+		return $this->projectRepository->createPermission($userId, $permission, $projectId);
 	}
 
 	public function deletePermission(string $accessToken, int $projectId, int $userId, string $permission) : bool
 	{
-		$userPermissions = $this->userRepository->getPermissionsInfo();
-		$currentUserId = $this->userRepository->findUserIdByAccessToken($accessToken);
+		$user = $this->userRepository->find(array('where' => array('id' => $userId)))[0];
 
-		if(Yii::$app->authManager->checkAccess(
-			$currentUserId,
-			$userPermissions['change_rules_project']['key'],
-			['project_id' => $projectId])
-		)
+		if (!$user)
 		{
-			$user = $this->userRepository->find(array('where' => array('id' => $userId)))[0];
-
-			if (!$user)
-			{
-				throw new \Exception('user_not_found');
-			}
-
-			return $this->projectRepository->deletePermission($userId, $permission, $projectId);
+			throw new \Exception('user_not_found');
 		}
 
-		return false;
+		return $this->projectRepository->deletePermission($userId, $permission, $projectId);
 	}
 }

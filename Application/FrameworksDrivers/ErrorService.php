@@ -8,6 +8,8 @@ class ErrorService
 	public $ERROR_DICTIONARY = array(
 		'error' => array("Some Error", ""),
 		'database_error' => array("Database error", ""),
+		'di_error' => array("Some error", ""),
+		'type_error' => array("Type error", ""),
 		'invalid_data' => array("Invalid data"),
 		"token_is_not_valid" => array("Error", "Token is not valid"),
 		"token_expired" => array("Error", "Token is expired"),
@@ -15,6 +17,7 @@ class ErrorService
 		'email_is_not_valid' => array("Email is not valid"),
 		'email_or_password_is_not_valid' => array("Email or password is not valid"),
 		'forbidden' => array("Forbidden"),
+		"access_is_denied" => array("Access is denied"),
 
 		'create_permission' => array("Failed to add permission"),
 		'delete_permission' => array("Failed to delete permission"),

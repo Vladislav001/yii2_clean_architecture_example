@@ -38,68 +38,58 @@ class TaskManager
 		$currentUserId = $this->userRepository->findUserIdByAccessToken($accessToken);
 
 		// *раскоментить, когда контроль доступа нужен будет
-		if(Yii::$app->authManager->checkAccess(
-			$currentUserId,
-			$userPermissions['get_project']['key'],
-			['project_id' => $projectID])
-		)
+
+		$data = $this->taskRepository->getSummaryByDirections($projectID, $currentUserId);
+
+		// получить все названия статусов для данного проекта
+		$taskStatusesProject = $this->taskStatusRepository->find(array(
+			'where' => array('project_id' => $projectID),
+			'index' => array('id')
+		));
+
+		foreach ($data as $value)
 		{
-			$data = $this->taskRepository->getSummaryByDirections($projectID, $currentUserId);
-
-			// получить все названия статусов для данного проекта
-			$taskStatusesProject = $this->taskStatusRepository->find(array(
-				'where' => array('project_id' => $projectID),
-				'index' => array('id')
-			));
-
-			foreach ($data as $value)
+			if (!isset($result[$value['direction_id']]))
 			{
-				if (!isset($result[$value['direction_id']]))
-				{
-					$taskGroup = array(
-						"id" => $value['direction_id'],
-						"name" => $value['direction_name'],
-						"number" => $value['direction_number'],
-						"tasks" => array(
-							array(
-								"count" => $value['task_count'],
-							)
+				$taskGroup = array(
+					"id" => $value['direction_id'],
+					"name" => $value['direction_name'],
+					"number" => $value['direction_number'],
+					"tasks" => array(
+						array(
+							"count" => $value['task_count'],
 						)
-					);
+					)
+				);
 
-					if ($value['task_status'])
-					{
-						$taskGroup["tasks"][0]["status"] = array(
-							"value" => $value['task_status'],
-							"text" => $taskStatusesProject[$value['task_status']]['name'],
-						);
-					}
-
-					$result[$value['direction_id']] = $taskGroup;
-				} else
+				if ($value['task_status'])
 				{
-					$taskGroup = array(
-						"count" => $value['task_count']
+					$taskGroup["tasks"][0]["status"] = array(
+						"value" => $value['task_status'],
+						"text" => $taskStatusesProject[$value['task_status']]['name'],
 					);
-
-					if ($value['task_status'])
-					{
-						$taskGroup["status"] = array(
-							"value" => $value['task_status'],
-							"text" => $taskStatusesProject[$value['task_status']]['name'],
-						);
-					}
-
-					$result[$value['direction_id']]["tasks"][] = $taskGroup;
 				}
-			}
 
-			$result = array_values($result);
+				$result[$value['direction_id']] = $taskGroup;
+			} else
+			{
+				$taskGroup = array(
+					"count" => $value['task_count']
+				);
+
+				if ($value['task_status'])
+				{
+					$taskGroup["status"] = array(
+						"value" => $value['task_status'],
+						"text" => $taskStatusesProject[$value['task_status']]['name'],
+					);
+				}
+
+				$result[$value['direction_id']]["tasks"][] = $taskGroup;
+			}
 		}
-		else
-		{
-			throw new \Exception('forbidden'); // todo коды ошибок
-		}
+
+		$result = array_values($result);
 
 		return $result;
 	}
