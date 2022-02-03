@@ -57,4 +57,19 @@ class MainController extends Controller
 
 		return true;
 	}
+
+	public function behaviors()
+	{
+		$behaviors = parent::behaviors();
+		$behaviors['corsFilter'] = [
+			'class' =>\yii\filters\Cors::className(),
+			'cors' => [
+				'Origin'  => ['*'],
+				'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+				'Access-Control-Max-Age' => 86400,
+			],
+		];
+
+		return $behaviors;
+	}
 }

@@ -7,19 +7,7 @@ class ApiUserController extends MainController
 {
 	public function behaviors()
 	{
-		parent::beforeAction(null);
-
-		return [
-			// надо подумать куда лучше определить этот код.
-			'corsFilter' => [
-				'class' => \yii\filters\Cors::className(),
-				'cors'  => [
-					'Origin'                           => ['*'],
-					'Access-Control-Request-Method'    => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
-					'Access-Control-Max-Age'           => 3600,
-				],
-			],
-		];
+		return parent::behaviors();
 	}
 
 	public function actionGetProfile()

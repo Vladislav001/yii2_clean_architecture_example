@@ -9,17 +9,9 @@ class ApiTaskStatusController extends MainController
 	public function behaviors()
 	{
 		parent::beforeAction(null);
+		$behaviors = parent::behaviors();
 
-		return [
-			// надо подумать куда лучше определить этот код.
-			'corsFilter' => [
-				'class' => \yii\filters\Cors::className(),
-				'cors'  => [
-					'Origin'                           => ['*'],
-					'Access-Control-Request-Method'    => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
-					'Access-Control-Max-Age'           => 3600,
-				],
-			],
+		return array_merge($behaviors, [
 			'access' => [
 				'class' => AccessControl::className(),
 				'rules' => [
@@ -76,7 +68,7 @@ class ApiTaskStatusController extends MainController
 					throw new \Exception('access_is_denied');
 				},
 			]
-		];
+		]);
 	}
 
 	public function actionCreate()
