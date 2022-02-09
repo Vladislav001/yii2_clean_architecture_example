@@ -10,6 +10,10 @@ use Yii;
  * @property int $id
  * @property int $project_id
  * @property string $name
+ * @property int|null $is_archive
+ * @property int $sort
+ * @property string $created_at
+ * @property string|null $updated_at
  *
  * @property Project $project
  * @property Task[] $tasks
@@ -31,9 +35,9 @@ class Direction extends \yii\db\ActiveRecord
     {
         return [
             [['project_id', 'name'], 'required'],
-            [['project_id'], 'integer'],
+            [['project_id', 'is_archive', 'sort'], 'integer'],
+            [['created_at', 'updated_at'], 'safe'],
             [['name'], 'string', 'max' => 255],
-			[['project_id', 'name'], 'unique', 'targetAttribute' => ['project_id', 'name']],
             [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['project_id' => 'id']],
         ];
     }
@@ -47,6 +51,10 @@ class Direction extends \yii\db\ActiveRecord
             'id' => 'ID',
             'project_id' => 'Project ID',
             'name' => 'Name',
+            'is_archive' => 'Is Archive',
+            'sort' => 'Sort',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
         ];
     }
 

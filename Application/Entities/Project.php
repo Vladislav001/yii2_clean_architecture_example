@@ -8,13 +8,15 @@ class Project
 	private $creator_id;
 	private $name;
 	private $logo;
+	private $sort;
 
-	public function __construct($id, $creator_id, $name, $logo = null)
+	public function __construct($id, $creator_id, $name, $logo = null, $sort = 0)
 	{
 		$this->id = $id;
 		$this->creator_id = $creator_id;
 		$this->name = $name;
 		$this->logo = $logo;
+		$this->sort = $sort;
 	}
 
 	/**
@@ -49,5 +51,11 @@ class Project
 		return $this->logo;
 	}
 
-
+	/**
+	 * @return int|mixed
+	 */
+	public function getSort()
+	{
+		return $this->sort;
+	}
 }

@@ -21,13 +21,13 @@ class TaskStatusManager
 
 	public function create(string $accessToken, array $data) : array
 	{
-		$data = new TaskStatus(null, $data['name'], $data['project_id']);
+		$data = new TaskStatus(null, $data['name'], $data['project_id'], $data['sort']);
 		return $this->taskStatusRepository->create($data);
 	}
 
 	public function update(string $accessToken, array $data) : bool
 	{
-		$data = new TaskStatus($data['id'], $data['name'], null);
+		$data = new TaskStatus($data['id'], $data['name'], null, $data['sort']);
 		$userPermissions = $this->userRepository->getPermissionsInfo();
 		$currentUserId = $this->userRepository->findUserIdByAccessToken($accessToken);
 		$taskStatusData = $this->taskStatusRepository->find(array('where' => array('id' => $data->getId())))[0];
@@ -72,8 +72,8 @@ class TaskStatusManager
 		return false;
 	}
 
-	public function getList(string $accessToken, int $projectId) : array
+	public function getList(array $filter = null, array $sort = null, array $pagination = null) : array
 	{
-		return $this->taskStatusRepository->getList($projectId);
+		return $this->taskStatusRepository->getList($filter, $sort, $pagination);
 	}
 }

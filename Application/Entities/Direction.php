@@ -8,17 +8,17 @@ class Direction
 	private $project_id;
 	private $name;
 	private $is_archive;
-	private $number;
+	private $sort;
 	private $created_at;
 	private $updated_at;
 
-	public function __construct($id, $project_id, $name, $is_archive = null, $number = null, $created_at = null, $updated_at = null)
+	public function __construct($id, $project_id, $name, $is_archive = null, $sort = 0, $created_at = null, $updated_at = null)
 	{
 		$this->id = $id;
 		$this->project_id = $project_id;
 		$this->name = $name;
 		$this->is_archive = $is_archive;
-		$this->number = $number;
+		$this->sort = $sort;
 		$this->created_at = $created_at;
 		$this->updated_at = $updated_at;
 	}
@@ -56,11 +56,11 @@ class Direction
 	}
 
 	/**
-	 * @return mixed|null
+	 * @return int|mixed
 	 */
-	public function getNumber()
+	public function getSort()
 	{
-		return $this->number;
+		return $this->sort;
 	}
 
 	/**

@@ -26,13 +26,13 @@ class ProjectManager
 	public function create(string $accessToken, array $data) : int
 	{
 		$currentUserId = $this->userRepository->findUserIdByAccessToken($accessToken);
-		$project = new Project(null, $currentUserId, $data['name'], $data['logo']);
+		$project = new Project(null, $currentUserId, $data['name'], $data['logo'], $data['sort']);
 
 		$transaction = Yii::$app->db->beginTransaction();
 		try
 		{
 			$newProjectId = $this->projectRepository->create($project);
-			$this->projectRepository->update(new Project($newProjectId, null, null, $project->getLogo()));
+			$this->projectRepository->update(new Project($newProjectId, null, null, $project->getLogo(), $project->getSort()));
 
 			// создать direction Архив задач
 			$direction= new Direction(null, $newProjectId, DICTIONARY['DIRECTION_ARCHIVE'], 1);
@@ -51,7 +51,7 @@ class ProjectManager
 	public function update($accessToken, array $data) : bool
 	{
 		$currentUserId = $this->userRepository->findUserIdByAccessToken($accessToken);
-		$project = new Project($data['id'], $currentUserId, $data['name'], $data['logo']);
+		$project = new Project($data['id'], $currentUserId, $data['name'], $data['logo'], $data['sort']);
 		return $this->projectRepository->update($project);
 	}
 
@@ -61,7 +61,7 @@ class ProjectManager
 		return $this->projectRepository->find($params);
 	}
 
-	public function getList(string $accessToken) : array
+	public function getList(string $accessToken, array $filter = null, array $sort = null, array $pagination = null) : array
 	{
 		$userRoles = $this->userRepository->getRolesInfo();
 		$userId = $this->userRepository->findUserIdByAccessToken($accessToken);
@@ -73,7 +73,7 @@ class ProjectManager
 		} else
 		{
 			$userPermissions = $this->userRepository->getPermissionsInfo();
-			$result =  $this->projectRepository->getList($userId, $userPermissions['get_project']['key']);
+			$result =  $this->projectRepository->getList($userId, $userPermissions['get_project']['key'], $filter, $sort, $pagination);
 		}
 
 		foreach ($result as $key => $value)

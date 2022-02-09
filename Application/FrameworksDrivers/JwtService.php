@@ -7,7 +7,9 @@ use Firebase\JWT\JWT;
 class JwtService
 {
 	private $key = "
-		
+		IXXR7gmCBZ4zgcuwuRjyZJ2g23IJS0mFs9394yBeBPLyoGj8twE5YSB4ewssoNY7GzRnLq5saCPKVLBTX
+		43Cw5ef0YGAS95jOPBraUIa78CUh0JnXpCiwTiWNU34e9Gjn9oxxXDnp56vfCRRZw0zwMcNYhK9xXJVR9
+		SLbd7G4u9asaIFC6ObwlMoCEz3rXQDiON8baZxZZX4yhjizKgJuWv5kKiVtVRcN8ZnpvqAloKB6FAnPSS8rQVNzJux2mq
 		";
 	private $expAccessToken = ACCESS_TOKEN_LIFE_TIME;
 	private $expRefreshToken = REFRESH_TOKEN_LIFE_TIME;

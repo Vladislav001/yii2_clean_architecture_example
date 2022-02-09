@@ -30,7 +30,27 @@ class MainRepository
 
 		if (!empty($params['orderBy']))
 		{
-			$query->orderBy($this->getOrderBy($params['orderBy']));
+			foreach ($params['orderBy'] as $key => $value)
+			{
+				if (!$value)
+				{
+					$value = SORT_ASC;
+				}
+
+				$params['orderBy'][$key] = mb_strtoupper($value) == 'DESC' ? SORT_DESC : SORT_ASC;
+			}
+
+			$query->orderBy($params['orderBy']);
+		}
+
+		if (!empty($params['offset']) && is_int($params['offset']) > 0)
+		{
+			$query->offset($params['offset'] === 1 ? 0 : $params['offset']);
+		}
+
+		if (!empty($params['limit']) && is_int($params['limit']) > 0)
+		{
+			$query->limit($params['limit']);
 		}
 
 	//	logToFile($query->createCommand()->rawSql, 'raw.log');

@@ -21,15 +21,15 @@ class DirectionManager
 		$this->userRepository = $userRepository;
 	}
 
-	public function create(string $accessToken, array $data) : array
+	public function create(array $data) : array
 	{
-		$data = new Direction(null, $data['project_id'], $data['name']);
+		$data = new Direction(null, $data['project_id'], $data['name'], null, $data['sort']);
 		return $this->directionRepository->create($data);
 	}
 
 	public function update(string $accessToken, array $data) : bool
 	{
-		$data = new Direction($data['id'], null, $data['name']);
+		$data = new Direction($data['id'], null, $data['name'], null, $data['sort']);
 		$userPermissions = $this->userRepository->getPermissionsInfo();
 		$currentUserId = $this->userRepository->findUserIdByAccessToken($accessToken);
 		$directionData = $this->directionRepository->find(array('where' => array('id' => $data->getId())))[0];
@@ -119,8 +119,8 @@ class DirectionManager
 		return false;
 	}
 
-	public function getList(string $accessToken, int $projectId) : array
+	public function getList(string $accessToken, array $filter = null, array $sort = null, array $pagination = null) : array
 	{
-		return $this->directionRepository->getList($projectId);
+		return $this->directionRepository->getList($filter, $sort, $pagination);
 	}
 }

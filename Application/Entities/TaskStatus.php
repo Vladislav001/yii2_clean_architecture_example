@@ -7,35 +7,45 @@ class TaskStatus
 	private $id;
 	private $name;
 	private $project_id;
+	private $sort;
 
-	public function __construct($id, $name, $project_id)
+	public function __construct($id, $name, $project_id, $sort)
 	{
 		$this->id = $id;
 		$this->name = $name;
 		$this->project_id = $project_id;
+		$this->sort = $sort;
 	}
 
 	/**
-	 * @return int
+	 * @return mixed
 	 */
-	public function getId() : string
+	public function getId()
 	{
 		return $this->id;
 	}
 
 	/**
-	 * @return string
+	 * @return mixed
 	 */
-	public function getName() : string
+	public function getName()
 	{
 		return $this->name;
 	}
 
 	/**
-	 * @return int
+	 * @return mixed
 	 */
-	public function getProjectId() : int
+	public function getProjectId()
 	{
 		return $this->project_id;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getSort()
+	{
+		return $this->sort;
 	}
 }

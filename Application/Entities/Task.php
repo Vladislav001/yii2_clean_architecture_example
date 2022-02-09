@@ -14,11 +14,11 @@ class Task
 	private $link;
 	private $link_result;
 	private $comment;
-	private $number;
+	private $sort;
 	private $created_at;
 	private $updated_at;
 
-	public function __construct($id, $direction_id, $name, $type, $term_plan, $status, $responsible, $link = null, $link_result = null, $comment = null, $number = null, $created_at = null, $updated_at = null)
+	public function __construct($id, $direction_id, $name, $type, $term_plan, $status, $responsible, $link = null, $link_result = null, $comment = null, $sort = 0, $created_at = null, $updated_at = null)
 	{
 		$this->id = $id;
 		$this->direction_id = $direction_id;
@@ -30,7 +30,7 @@ class Task
 		$this->link = $link;
 		$this->link_result = $link_result;
 		$this->comment = $comment;
-		$this->number = $number;
+		$this->sort = $sort;
 		$this->created_at = $created_at;
 		$this->updated_at = $updated_at;
 	}
@@ -116,11 +116,11 @@ class Task
 	}
 
 	/**
-	 * @return mixed|null
+	 * @return int|mixed
 	 */
-	public function getNumber()
+	public function getSort()
 	{
-		return $this->number;
+		return $this->sort;
 	}
 
 	/**

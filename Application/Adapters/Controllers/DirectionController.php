@@ -13,9 +13,9 @@ class DirectionController
 		$this->directionManager = $directionManager;
 	}
 
-	public function create(string $accessToken, array $data) : array
+	public function create(array $data) : array
 	{
-		return $this->directionManager->create($accessToken, $data);
+		return $this->directionManager->create($data);
 	}
 
 	public function update(string $accessToken, array $data) : bool
@@ -28,8 +28,8 @@ class DirectionController
 		return $this->directionManager->delete($accessToken, $id);
 	}
 
-	public function getList(string $accessToken, int $projectId) : array
+	public function getList(string $accessToken, array $filter = null, array $sort = null, array $pagination = null) : array
 	{
-		return $this->directionManager->getList($accessToken, $projectId);
+		return $this->directionManager->getList($accessToken, $filter, $sort, $pagination);
 	}
 }

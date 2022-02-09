@@ -17,7 +17,7 @@ use Yii;
  * @property string|null $link
  * @property string|null $link_result
  * @property string|null $comment
- * @property int|null $number Номер в таблице excel
+ * @property int $sort
  * @property string $created_at
  * @property string|null $updated_at
  *
@@ -43,7 +43,7 @@ class Task extends \yii\db\ActiveRecord
     {
         return [
             [['direction_id', 'name', 'type', 'status', 'responsible'], 'required'],
-            [['direction_id', 'type', 'status', 'responsible', 'number'], 'integer'],
+            [['direction_id', 'type', 'status', 'responsible', 'sort'], 'integer'],
             [['comment'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['name', 'term_plan', 'link', 'link_result'], 'string', 'max' => 255],
@@ -70,7 +70,7 @@ class Task extends \yii\db\ActiveRecord
             'link' => 'Link',
             'link_result' => 'Link Result',
             'comment' => 'Comment',
-            'number' => 'Number',
+            'sort' => 'Sort',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

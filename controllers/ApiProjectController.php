@@ -111,9 +111,11 @@ class ApiProjectController extends MainController
 	// внутри проверка и логика, т.к для админа все проекты будут
 	public function actionGetList()
 	{
-		if (Yii::$app->request->isGet)
+		if (Yii::$app->request->isPost)
 		{
-			return $this->projectInstance->getList($this->accessToken);
+			$data = Yii::$app->getRequest()->getRawBody();
+			$data = json_decode($data, true);
+			return $this->projectInstance->getList($this->accessToken, $data['filter'], $data['sort'], $data['pagination']);
 		}
 
 		return array();

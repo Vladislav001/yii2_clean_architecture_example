@@ -12,5 +12,5 @@ interface ProjectRepositoryInterface
 
 	public function find(array $params = array()) : array;
 
-	public function getList(int $userId, string $permission) : array;
+	public function getList(int $userId, string $permission, array $filter = null, array $sort = null, array $pagination = null) : array;
 }

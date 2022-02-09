@@ -41,20 +41,22 @@ class ApiTaskResponsibleController extends MainController
 						'allow' => true,
 						'matchCallback' => function ($rule, $action)
 						{
-							$getData = Yii::$app->request->get();
+							$postData = Yii::$app->getRequest()->getRawBody();
+							$postData = json_decode($postData, true);
 							$currentUserId = $this->userInstance->getProfile($this->accessToken)['id'];
 							$userPermissions = $this->userInstance->getPermissionsInfo();
+							$projectId = $postData['filter']['project_id'];
 
-							if(Yii::$app->authManager->checkAccess(
-								$currentUserId,
-								$userPermissions['get_project']['key'],
-								['project_id' => $getData['project_id']])
+							if(!$projectId || !Yii::$app->authManager->checkAccess(
+									$currentUserId,
+									$userPermissions['get_project']['key'],
+									['project_id' => $projectId])
 							)
 							{
-								return true;
+								return false;
 							}
 
-							return false;
+							return true;
 						}
 					],
 					[
@@ -106,10 +108,11 @@ class ApiTaskResponsibleController extends MainController
 
 	public function actionGetList()
 	{
-		if (Yii::$app->request->isGet)
+		if (Yii::$app->request->isPost)
 		{
-			$params = Yii::$app->request->get();
-			return $this->taskResponsibleInstance->getList($this->accessToken, $params['project_id']);
+			$data = Yii::$app->getRequest()->getRawBody();
+			$data = json_decode($data, true);
+			return $this->taskResponsibleInstance->getList($data['filter'], $data['sort'], $data['pagination']);
 		}
 
 		return array();

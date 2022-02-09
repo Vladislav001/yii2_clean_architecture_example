@@ -28,8 +28,8 @@ class TaskResponsibleController
 		return $this->taskResponsibleManager->delete($accessToken, $id);
 	}
 
-	public function getList(string $accessToken, int $projectId) : array
+	public function getList(array $filter = null, array $sort = null, array $pagination = null) : array
 	{
-		return $this->taskResponsibleManager->getList($accessToken, $projectId);
+		return $this->taskResponsibleManager->getList($filter, $sort, $pagination);
 	}
 }

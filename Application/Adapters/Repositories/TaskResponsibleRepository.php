@@ -15,6 +15,7 @@ class TaskResponsibleRepository extends MainRepository implements TaskResponsibl
 		$model = new $this->model();
 		$model->name = $data->getName();
 		$model->project_id = $data->getProjectId();;
+		$model->sort = $data->getSort();
 
 		if ($model->validate())
 		{
@@ -32,6 +33,7 @@ class TaskResponsibleRepository extends MainRepository implements TaskResponsibl
 	{
 		$model = $this->model::findOne(['id' => $data->getId()]);
 		$model->name = $data->getName();
+		$model->sort = $data->getSort() ?? $model->sort;
 
 		if ($model->validate())
 		{
@@ -55,8 +57,22 @@ class TaskResponsibleRepository extends MainRepository implements TaskResponsibl
 		}
 	}
 
-	public function getList(int $projectId) : array
+	public function getList(array $filter = null, array $sort = null, array $pagination = null) : array
 	{
-		return $this->model::find()->where(['project_id' => $projectId])->asArray()->all();
+		$query = $this->model::find();
+
+		if ($filter['project_id'])
+		{
+			$query->where(["project_id" => $filter['project_id']]);
+		}
+
+		if ($sort['field'] && $sort['type'])
+		{
+			$query->orderBy([$sort['field'] => mb_strtoupper($sort['type']) == 'DESC' ? SORT_DESC : SORT_ASC]);
+		}
+
+		$result = $query->asArray()->all();
+
+		return $result;
 	}
 }

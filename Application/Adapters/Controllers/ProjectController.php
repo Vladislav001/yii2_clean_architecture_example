@@ -24,9 +24,9 @@ class ProjectController
 		return $this->projectManager->update($accessToken, $data);
 	}
 
-	public function getList(string $accessToken) : array
+	public function getList(string $accessToken, array $filter = null, array $sort = null, array $pagination = null) : array
 	{
-		return $this->projectManager->getList($accessToken);
+		return $this->projectManager->getList($accessToken, $filter, $sort, $pagination);
 	}
 
 	public function createPermission(string $accessToken, int $projectId, int $userId, string $permission) : bool

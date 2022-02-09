@@ -12,5 +12,5 @@ interface TaskTypeRepositoryInterface
 
 	public function delete(int $id) : bool;
 
-	public function getList(int $projectId) : array;
+	public function getList(array $filter = null, array $sort = null, array $pagination = null) : array;
 }

@@ -11,6 +11,7 @@ use Yii;
  * @property int $creator_id
  * @property string $name
  * @property string|null $logo
+ * @property int $sort
  *
  * @property User $creator
  * @property Direction[] $directions
@@ -36,7 +37,7 @@ class Project extends \yii\db\ActiveRecord
     {
         return [
             [['creator_id', 'name'], 'required'],
-            [['creator_id'], 'integer'],
+            [['creator_id', 'sort'], 'integer'],
             [['name', 'logo'], 'string', 'max' => 255],
             [['creator_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['creator_id' => 'id']],
         ];
@@ -52,6 +53,7 @@ class Project extends \yii\db\ActiveRecord
             'creator_id' => 'Creator ID',
             'name' => 'Name',
             'logo' => 'Logo',
+            'sort' => 'Sort',
         ];
     }
 

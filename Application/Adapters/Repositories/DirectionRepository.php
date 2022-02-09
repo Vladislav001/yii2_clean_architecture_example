@@ -19,11 +19,12 @@ class DirectionRepository extends MainRepository implements DirectionRepositoryI
 		$model->name = $data->getName();
 		$model->project_id = $data->getProjectId();
 		$model->is_archive = $data->getIsArchive();
+		$model->sort = $data->getSort();
 
 		if ($model->validate())
 		{
 			$model->save();
-			$result['id'] = $model->id;
+			$result['id'] = $model->getPrimaryKey();;
 		} else
 		{
 			throw new \Exception(current($model->errors)[0]);
@@ -37,6 +38,7 @@ class DirectionRepository extends MainRepository implements DirectionRepositoryI
 		$model = $this->model::findOne(['id' => $data->getId()]);
 		$model->name = $data->getName();
 		$model->updated_at = date('Y-m-d H:i:s');
+		$model->sort = $data->getSort() ?? $model->sort;
 
 		if ($model->validate())
 		{
@@ -61,8 +63,22 @@ class DirectionRepository extends MainRepository implements DirectionRepositoryI
 		}
 	}
 
-	public function getList(int $projectId) : array
+	public function getList(array $filter = null, array $sort = null,  array $pagination = null) : array
 	{
-		return $this->model::find()->where(['project_id' => $projectId])->asArray()->all();
+		$query = $this->model::find();
+
+		if ($filter['project_id'])
+		{
+			$query->where(["project_id" => $filter['project_id']]);
+		}
+
+		if ($sort['field'] && $sort['type'])
+		{
+			$query->orderBy([$sort['field'] => mb_strtoupper($sort['type']) == 'DESC' ? SORT_DESC : SORT_ASC]);
+		}
+
+		$result = $query->asArray()->all();
+
+		return $result;
 	}
 }

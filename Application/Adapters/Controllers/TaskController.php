@@ -14,14 +14,14 @@ class TaskController
 		$this->taskManager = $taskManager;
 	}
 
-	public function getSummaryByDirections(string $accessToken, int $projectID) : array
+	public function getSummaryByDirections(array $filter = null, array $sort = null, array $pagination = null) : array
 	{
-		return $this->taskManager->getSummaryByDirections($accessToken, $projectID);
+		return $this->taskManager->getSummaryByDirections($filter, $sort, $pagination);
 	}
 
-	public function getList(string $accessToken, $params) : array
+	public function getList(string $accessToken, array $filter = null, array $sort = null, array $pagination = null) : array
 	{
-		return $this->taskManager->getList($accessToken, $params);
+		return $this->taskManager->getList($accessToken, $filter, $sort, $pagination);
 	}
 
 	/**

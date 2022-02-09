@@ -31,19 +31,15 @@ class TaskManager
 		$this->userRepository = $userRepository;
 	}
 
-	public function getSummaryByDirections(string $accessToken, int $projectID) : array
+	public function getSummaryByDirections(array $filter = null, array $sort = null, array $pagination = null) : array
 	{
 		$result = array();
-		$userPermissions = $this->userRepository->getPermissionsInfo();
-		$currentUserId = $this->userRepository->findUserIdByAccessToken($accessToken);
 
-		// *раскоментить, когда контроль доступа нужен будет
-
-		$data = $this->taskRepository->getSummaryByDirections($projectID, $currentUserId);
+		$data = $this->taskRepository->getSummaryByDirections($filter, $sort, $pagination);
 
 		// получить все названия статусов для данного проекта
 		$taskStatusesProject = $this->taskStatusRepository->find(array(
-			'where' => array('project_id' => $projectID),
+			'where' => array('project_id' => $filter['project_id']),
 			'index' => array('id')
 		));
 
@@ -54,7 +50,7 @@ class TaskManager
 				$taskGroup = array(
 					"id" => $value['direction_id'],
 					"name" => $value['direction_name'],
-					"number" => $value['direction_number'],
+					"sort" => $value['direction_sort'],
 					"tasks" => array(
 						array(
 							"count" => $value['task_count'],
@@ -65,8 +61,8 @@ class TaskManager
 				if ($value['task_status'])
 				{
 					$taskGroup["tasks"][0]["status"] = array(
-						"value" => $value['task_status'],
-						"text" => $taskStatusesProject[$value['task_status']]['name'],
+						"id" => $value['task_status'],
+						"name" => $taskStatusesProject[$value['task_status']]['name'],
 					);
 				}
 
@@ -80,8 +76,8 @@ class TaskManager
 				if ($value['task_status'])
 				{
 					$taskGroup["status"] = array(
-						"value" => $value['task_status'],
-						"text" => $taskStatusesProject[$value['task_status']]['name'],
+						"id" => $value['task_status'],
+						"name" => $taskStatusesProject[$value['task_status']]['name'],
 					);
 				}
 
@@ -94,12 +90,12 @@ class TaskManager
 		return $result;
 	}
 
-	public function getList(string $accessToken, array $params) : array
+	public function getList(string $accessToken, array $filter = null, array $sort = null, array $pagination = null) : array
 	{
 		$result = array();
 		$userPermissions = $this->userRepository->getPermissionsInfo();
 		$currentUserId = $this->userRepository->findUserIdByAccessToken($accessToken);
-		$directionData = $this->directionRepository->find(array('where' => array('id' => $params['where']['direction_id'])))[0];
+		$directionData = $this->directionRepository->find(array('where' => array('id' => $filter['direction_id'])))[0];
 
 		if (!$directionData)
 		{
@@ -113,7 +109,7 @@ class TaskManager
 			['project_id' => $directionData['project_id']])
 		)
 		{
-			$result = $this->taskRepository->getList($params, $currentUserId);
+			$result = $this->taskRepository->getList($currentUserId, $filter, $sort, $pagination);
 
 			if ($result)
 			{
@@ -191,7 +187,7 @@ class TaskManager
 	public function create(string $accessToken, array $data) : array
 	{
 		$data = new Task(null, $data['direction_id'], $data['name'], $data['type'], $data['term_plan'],
-			$data['status'], $data['responsible'], $data['link'], $data['link_result'], $data['comment']);
+			$data['status'], $data['responsible'], $data['link'], $data['link_result'], $data['comment'], $data['sort']);
 		$userPermissions = $this->userRepository->getPermissionsInfo();
 		$currentUserId = $this->userRepository->findUserIdByAccessToken($accessToken);
 		$directionData = $this->directionRepository->find(array('where' => array('id' => $data->getDirectionId())))[0];
@@ -228,7 +224,7 @@ class TaskManager
 	public function update(string $accessToken, array $data) : bool
 	{
 		$data = new Task($data['id'], $data['direction_id'], $data['name'], $data['type'], $data['term_plan'],
-			$data['status'], $data['responsible'], $data['link'], $data['link_result'], $data['comment']);
+			$data['status'], $data['responsible'], $data['link'], $data['link_result'], $data['comment'], $data['sort']);
 		$userPermissions = $this->userRepository->getPermissionsInfo();
 		$currentUserId = $this->userRepository->findUserIdByAccessToken($accessToken);
 		$taskData = $this->taskRepository->find(array('where' => array('id' => $data->getId())))[0];

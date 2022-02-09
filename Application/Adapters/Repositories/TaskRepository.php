@@ -15,7 +15,7 @@ class TaskRepository extends MainRepository implements TaskRepositoryInterface
 {
 	protected $model = TaskModel::class;
 
-	public function getSummaryByDirections(int $projectID, int $userId = 0) : array
+	public function getSummaryByDirections(array $filter = null, array $sort = null, array $pagination = null) : array
 	{
 		$taskTableName = $this->model::tableName();
 		$directionTableName = DirectionModel::tableName();
@@ -27,21 +27,29 @@ class TaskRepository extends MainRepository implements TaskRepositoryInterface
 				"count($taskTableName.id) as task_count, $taskTableName.status as task_status",
 				"$directionTableName.id as direction_id",
 				"$directionTableName.name as direction_name",
-				"$directionTableName.number as direction_number",
+				"$directionTableName.sort as direction_sort",
 			])->from($taskTableName)
 			->rightJoin("$directionTableName", "$directionTableName.id = $taskTableName.direction_id")
-			->innerJoin("$projectTableName", "$projectTableName.id = $directionTableName.project_id")
-			->where(["$projectTableName.id" => $projectID])
-			->groupBy('direction_name, task_status')
-			->orderBy(["$directionTableName.number" => SORT_ASC])
-			->all();
+			->innerJoin("$projectTableName", "$projectTableName.id = $directionTableName.project_id");
+
+		if ($filter['project_id'])
+		{
+			$query->where(["$projectTableName.id" => $filter['project_id']]);
+		}
+
+		$query->groupBy('direction_name, task_status');
+
+		if ($sort['field'] && $sort['type'])
+		{
+			$query->orderBy(["$directionTableName." . $sort['field'] => mb_strtoupper($sort['type']) == 'DESC' ? SORT_DESC : SORT_ASC]);
+		}
 
 		$result = $query->asArray()->all();
 
 		return $result;
 	}
 
-	public function getList(array $params, int $userId) : array
+	public function getList(int $userId, array $filter = null, array $sort = null, array $pagination = null) : array
 	{
 		$taskTableName = $this->model::tableName();
 		$directionTableName = DirectionModel::tableName();
@@ -51,9 +59,17 @@ class TaskRepository extends MainRepository implements TaskRepositoryInterface
 
 		$query->select("$taskTableName.*")->from($taskTableName)
 			->rightJoin("$directionTableName", "$directionTableName.id = $taskTableName.direction_id")
-			->innerJoin("$projectTableName", "$projectTableName.id = $directionTableName.project_id")
-			->where($params['where'])
-			->orderBy($this->getOrderBy($params['orderBy']));
+			->innerJoin("$projectTableName", "$projectTableName.id = $directionTableName.project_id");
+
+		if ($filter['direction_id'])
+		{
+			$query->where(["direction_id" => $filter['direction_id']]);
+		}
+
+		if ($sort['field'] && $sort['type'])
+		{
+			$query->orderBy(["$taskTableName." . $sort['field'] => mb_strtoupper($sort['type']) == 'DESC' ? SORT_DESC : SORT_ASC]);
+		}
 
 		$result = $query->asArray()->all();
 
@@ -90,6 +106,7 @@ class TaskRepository extends MainRepository implements TaskRepositoryInterface
 		$model->link = $data->getLink();
 		$model->link_result = $data->getLinkResult();
 		$model->comment =$data->getComment();
+		$model->sort = $data->getSort();
 
 		if ($model->validate())
 		{
@@ -116,6 +133,7 @@ class TaskRepository extends MainRepository implements TaskRepositoryInterface
 		$model->link = $data->getLink() ?? $model->link;
 		$model->link_result = $data->getLinkResult() ?? $model->link_result;
 		$model->comment = $data->getComment() ?? $model->comment;
+		$model->sort = $data->getSort() ?? $model->sort;
 
 		if ($model->validate())
 		{

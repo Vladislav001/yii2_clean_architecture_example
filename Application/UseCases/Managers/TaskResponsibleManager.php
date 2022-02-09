@@ -20,13 +20,13 @@ class TaskResponsibleManager
 
 	public function create(string $accessToken, array $data) : array
 	{
-		$data = new TaskResponsible(null, $data['name'], $data['project_id']);
+		$data = new TaskResponsible(null, $data['name'], $data['project_id'], $data['sort']);
 		return $this->taskResponsibleRepository->create($data);
 	}
 
 	public function update(string $accessToken, array $data) : bool
 	{
-		$data = new TaskResponsible($data['id'], $data['name'], $data['project_id']);
+		$data = new TaskResponsible($data['id'], $data['name'], $data['project_id'], $data['sort']);
 		$userPermissions = $this->userRepository->getPermissionsInfo();
 		$currentUserId = $this->userRepository->findUserIdByAccessToken($accessToken);
 		$taskResponsibleData = $this->taskResponsibleRepository->find(array('where' => array('id' => $data->getId())))[0];
@@ -71,8 +71,8 @@ class TaskResponsibleManager
 		return false;
 	}
 
-	public function getList(string $accessToken, int $projectId) : array
+	public function getList(array $filter = null, array $sort = null, array $pagination = null) : array
 	{
-		return $this->taskResponsibleRepository->getList($projectId);
+		return $this->taskResponsibleRepository->getList($filter, $sort, $pagination);
 	}
 }

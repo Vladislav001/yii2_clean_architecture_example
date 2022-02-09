@@ -20,14 +20,16 @@ class ApiTaskController extends MainController
 						'allow' => true,
 						'matchCallback' => function ($rule, $action)
 						{
-							$getData = Yii::$app->request->get();
+							$postData = Yii::$app->getRequest()->getRawBody();
+							$postData = json_decode($postData, true);
+
 							$currentUserId = $this->userInstance->getProfile($this->accessToken)['id'];
 							$userPermissions = $this->userInstance->getPermissionsInfo();
 
 							if(Yii::$app->authManager->checkAccess(
 								$currentUserId,
 								$userPermissions['get_project']['key'],
-								['project_id' => $getData['project_id']])
+								['project_id' => $postData['filter']['project_id']])
 							)
 							{
 								return true;
@@ -52,11 +54,11 @@ class ApiTaskController extends MainController
 
 	public function actionGetSummaryByDirections()
 	{
-		if (Yii::$app->request->isGet)
+		if (Yii::$app->request->isPost)
 		{
-			$data = Yii::$app->request->get();
-
-			return $this->taskInstance->getSummaryByDirections($this->accessToken, $data['project_id']);
+			$data = Yii::$app->getRequest()->getRawBody();
+			$data = json_decode($data, true);
+			return $this->taskInstance->getSummaryByDirections($data['filter'], $data['sort'], $data['pagination']);
 		}
 
 		return array();
@@ -64,29 +66,16 @@ class ApiTaskController extends MainController
 
 	public function actionGetList()
 	{
-		if (Yii::$app->request->isGet)
+		if (Yii::$app->request->isPost)
 		{
-			$params = Yii::$app->request->get();
-
-			// *второй аргумент воспринимает не как работу c yii2, а как просто логику, которую разберем уже в слои репозитория,т.е
-			// фактически все что влияет на работу с БД находится в слое репозитория
-			return $this->taskInstance->getList($this->accessToken, array(
-				'where' => array(
-					'direction_id' => $params['direction_id']
-				),
-				'orderBy' => array(
-					$params['sort_field'] => $params['sort_type']
-				)
-			));
+			$data = Yii::$app->getRequest()->getRawBody();
+			$data = json_decode($data, true);
+			return $this->taskInstance->getList($this->accessToken, $data['filter'], $data['sort'], $data['pagination']);
 		}
 
 		return array();
 	}
 
-	/**
-	 * Получить задачу по ID
-	 * @return array
-	 */
 	public function actionGetById()
 	{
 		if (Yii::$app->request->isGet)

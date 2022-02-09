@@ -22,6 +22,7 @@ class ProjectRepository extends MainRepository implements ProjectRepositoryInter
 		$model = new $this->model;
 		$model->name = $project->getName();
 		$model->creator_id = $project->getCreatorId();
+		$model->sort = $project->getSort();
 
 		if ($model->validate())
 		{
@@ -39,6 +40,7 @@ class ProjectRepository extends MainRepository implements ProjectRepositoryInter
 		$model = $this->model::findOne($id);
 		$model->name = $project->getName() ?? $model->name;
 		$model->logo = $project->getLogo() ?? $model->logo;
+		$model->sort = $project->getSort() ?? $model->sort;
 
 		if ($model->logo)
 		{
@@ -60,7 +62,7 @@ class ProjectRepository extends MainRepository implements ProjectRepositoryInter
 		}
 	}
 
-	public function getList(int $userId, string $permission) : array
+	public function getList(int $userId, string $permission, array $filter = null, array $sort = null, array $pagination = null) : array
 	{
 		$projectTableName = $this->model::tableName();
 		$relationProjectAuthItemModel = $this->relationProjectAuthItemModel::tableName();
@@ -71,16 +73,22 @@ class ProjectRepository extends MainRepository implements ProjectRepositoryInter
 			"$projectTableName.id",
 			"$projectTableName.creator_id",
 			"$projectTableName.name",
-			"$projectTableName.logo"
+			"$projectTableName.logo",
+			"$projectTableName.sort"
 		])->from($projectTableName)
 			->leftJoin("$relationProjectAuthItemModel", "$relationProjectAuthItemModel.project_id = $projectTableName.id")
 			->where(["$projectTableName.creator_id" => $userId])
 			->orWhere([
 				"$relationProjectAuthItemModel.user_id" => $userId,
 				"$relationProjectAuthItemModel.name" => $permission
-			])->all();
+			]);
 
-		//logToFile($query->createCommand()->rawSql, 'raw.log');
+		if ($sort['field'] && $sort['type'])
+		{
+			$query->orderBy(["$projectTableName." . $sort['field'] => mb_strtoupper($sort['type']) == 'DESC' ? SORT_DESC : SORT_ASC]);
+		}
+
+		// logToFile($query->createCommand()->rawSql, 'raw.log');
 
 		$result = $query->asArray()->all();
 

@@ -28,8 +28,8 @@ class TaskStatusController
 		return $this->taskStatusManager->delete($accessToken, $id);
 	}
 
-	public function getList(string $accessToken, int $projectId) : array
+	public function getList(array $filter = null, array $sort = null, array $pagination = null) : array
 	{
-		return $this->taskStatusManager->getList($accessToken, $projectId);
+		return $this->taskStatusManager->getList($filter, $sort, $pagination);
 	}
 }
