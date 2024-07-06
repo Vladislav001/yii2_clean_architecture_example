@@ -1,0 +1,1422 @@
+{
+	"info": {
+		"_postman_id": "c7343f80-d267-4fbe-bec8-5e6978294528",
+		"name": "yii2_clean_architecture_example",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4082988"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "/registration/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "email@mail.ru",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Какое-то имя",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-user/registration",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-user",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/login/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "email@mail.ru",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-user/login",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/profile/",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{site}}/web/api-user/get-profile",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-user",
+								"get-profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tokens-update/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Refresh-Token",
+								"value": "{{refresh_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{site}}/web/api-token/update",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-token",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/logout/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{site}}/web/api-user/logout",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-user",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/logout-all/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{site}}/web/api-user/logout-all",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-user",
+								"logout-all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/restore-password/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "email@mail.ru",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-user/restore-password",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-user",
+								"restore-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/change-password-by-token/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "new_password",
+									"value": "1234",
+									"type": "text"
+								},
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJiYWNrZW5kLW96b24ucmFsaW5jZS5ydSIsImlhdCI6MTYzODE3OTYwNSwibmJmIjoxNjM4MTc5NjA1LCJleHAiOjE2MzgxODMyMDUsImRhdGEiOnsidXNlcl9pZCI6Mn19.HjHESmbTRvf_der_XuC1oPUo1CXm1JUsuzA9JWCtdAs",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-user/change-password-by-token",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-user",
+								"change-password-by-token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "project",
+			"item": [
+				{
+					"name": "/create-permission/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "project_id",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "user_id",
+									"value": "46",
+									"type": "text"
+								},
+								{
+									"key": "permission",
+									"value": "get_project",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-project/create-permission/",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-project",
+								"create-permission",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/delete-permission/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "project_id",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "user_id",
+									"value": "46",
+									"type": "text"
+								},
+								{
+									"key": "permission",
+									"value": "get_project",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-project/delete-permission/",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-project",
+								"delete-permission",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/get-list/",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{site}}/web/api-project/get-list/",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-project",
+								"get-list",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/create/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Тест",
+									"type": "text"
+								},
+								{
+									"key": "logo",
+									"type": "file",
+									"src": "/C:/Users/Админ/Desktop/1ч.jpg",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-project/create/",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-project",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/update/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "test1112222",
+									"type": "text"
+								},
+								{
+									"key": "logo",
+									"type": "file",
+									"src": "/C:/Users/Админ/Desktop/1ч.jpg",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-project/update/",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-project",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "direction",
+			"item": [
+				{
+					"name": "/update/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "98",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Общие задачи",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-direction/update/",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-direction",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/create/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "direction 1",
+									"type": "text"
+								},
+								{
+									"key": "project_id",
+									"value": "62",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-direction/create/",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-direction",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/delete/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "84",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-direction/delete/",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-direction",
+								"delete",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/get-list/",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{site}}/web/api-direction/get-list/?project_id=12",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-direction",
+								"get-list",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "12"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "task",
+			"item": [
+				{
+					"name": "get-summary-by-directions/",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{site}}/web/api-task/get-summary-by-directions/?project_id=62",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-task",
+								"get-summary-by-directions",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "62"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/get-list/",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{site}}/web/api-task/get-list/?direction_id=98&sort_field=type&sort_type=asc",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-task",
+								"get-list",
+								""
+							],
+							"query": [
+								{
+									"key": "direction_id",
+									"value": "98"
+								},
+								{
+									"key": "sort_field",
+									"value": "type"
+								},
+								{
+									"key": "sort_type",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/create/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "direction_id",
+									"value": "74",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "term_plan",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "responsible",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "link",
+									"value": "7",
+									"type": "text"
+								},
+								{
+									"key": "link_result",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "comment",
+									"value": "9",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-task/create/",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-task",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/update/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "direction_id",
+									"value": "74",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "test 123",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "term_plan",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "responsible",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "link",
+									"value": "7",
+									"type": "text"
+								},
+								{
+									"key": "link_result",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "comment",
+									"value": "9",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-task/update/",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-task",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/move-to-archive/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "816",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-task/move-to-archive/",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-task",
+								"move-to-archive",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "task-status",
+			"item": [
+				{
+					"name": "/create/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "project_id",
+									"value": "12",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-task-status/create/",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-task-status",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/update/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "статус 1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-task-status/update/",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-task-status",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/delete/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-task-status/delete/",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-task-status",
+								"delete",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/get-list/",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{site}}/web/api-task-status/get-list/?project_id=12",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-task-status",
+								"get-list",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "12"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "task-type",
+			"item": [
+				{
+					"name": "/create/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "тип 333",
+									"type": "text"
+								},
+								{
+									"key": "project_id",
+									"value": "12",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-task-type/create/",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-task-type",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/update/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "тип 1/1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-task-type/update/",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-task-type",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/delete/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "6",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-task-type/delete/",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-task-type",
+								"delete",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/get-list/",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{site}}/web/api-task-type/get-list/?project_id=12",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-task-type",
+								"get-list",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "12"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "task-responsible",
+			"item": [
+				{
+					"name": "/create/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Ответственный 3",
+									"type": "text"
+								},
+								{
+									"key": "project_id",
+									"value": "12",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-task-responsible/create/",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-task-responsible",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/update/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "ОТВЕТСТ 1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-task-responsible/update/",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-task-responsible",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/delete/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{site}}/web/api-task-responsible/delete/",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-task-responsible",
+								"delete",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/get-list/",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{site}}/web/api-task-responsible/get-list/?project_id=12",
+							"host": [
+								"{{site}}"
+							],
+							"path": [
+								"web",
+								"api-task-responsible",
+								"get-list",
+								""
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "12"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "site",
+			"value": "http://site.ru"
+		},
+		{
+			"key": "access_token",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJiYWNrZW5kLnNhLWNybS5ydSIsImlhdCI6MTY0MzAwMjQ3MCwibmJmIjoxNjQzMDAyNDcwLCJleHAiOjE2NDM2MDcyNzAsImRhdGEiOnsidXNlcl9pZCI6NTEsInJhbmRfZGF0YSI6IjE2NDMwMDI0NzAxMCJ9fQ.N0Uzla0tP4xD1NKkFEdVVqnyPhRqKQShgv999axfrGU"
+		},
+		{
+			"key": "refresh_token",
+			"value": ""
+		}
+	]
+}
